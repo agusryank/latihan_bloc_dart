@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:todo_cubit/models/todo_model.dart';
@@ -9,5 +11,6 @@ class TodoFilterCubit extends Cubit<TodoFilterState> {
 
   void changeFilter(Filter filter) {
     emit(state.copyWith(filter: filter));
+    log(state.toString());
   }
 }

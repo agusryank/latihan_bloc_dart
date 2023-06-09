@@ -14,11 +14,15 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
   final TodoFilterCubit todoFilterCubit;
   final TodoSearchCubit todoSearchCubit;
   final TodoListCubit todoListCubit;
+
+  final List<TodoModel> initTodo;
+
   FilteredTodosCubit({
+    required this.initTodo,
     required this.todoFilterCubit,
     required this.todoSearchCubit,
     required this.todoListCubit,
-  }) : super(FilteredTodosState.initial()) {
+  }) : super(FilteredTodosState(filteredTodos: initTodo)) {
     todoFilterSubscription =
         todoFilterCubit.stream.listen((TodoFilterState todoFilterState) {
       setFilteredTodos();
@@ -34,35 +38,35 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
       setFilteredTodos();
     });
   }
-
   void setFilteredTodos() {
     List<TodoModel> _filteredTodos;
 
     switch (todoFilterCubit.state.filter) {
       case Filter.active:
-        _filteredTodos =
-            todoListCubit.state.todos.where((todo) => !todo.completed).toList();
+        _filteredTodos = todoListCubit.state.todos
+            .where((TodoModel todo) => !todo.completed)
+            .toList();
         break;
       case Filter.completed:
-        _filteredTodos =
-            todoListCubit.state.todos.where((todo) => todo.completed).toList();
+        _filteredTodos = todoListCubit.state.todos
+            .where((TodoModel todo) => todo.completed)
+            .toList();
         break;
       case Filter.all:
       default:
         _filteredTodos = todoListCubit.state.todos;
         break;
     }
+
     if (todoSearchCubit.state.query.isNotEmpty) {
       _filteredTodos = _filteredTodos
-          .where((todo) => todo.desc
+          .where((TodoModel todo) => todo.desc
               .toLowerCase()
               .contains(todoSearchCubit.state.query.toLowerCase()))
           .toList();
-
-      emit(state.copyWith(
-        filteredTodos: _filteredTodos,
-      ));
     }
+
+    emit(state.copyWith(filteredTodos: _filteredTodos));
   }
 
   @override

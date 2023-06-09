@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,5 +10,7 @@ class TodoSearchCubit extends Cubit<TodoSearchState> {
 
   void setQuery(String query) {
     emit(state.copyWith(query: query));
+
+    log('TodoSearchCubit: setQuery: ${state.query}');
   }
 }
