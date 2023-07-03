@@ -14,7 +14,6 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
   final TodoFilterCubit todoFilterCubit;
   final TodoSearchCubit todoSearchCubit;
   final TodoListCubit todoListCubit;
-
   final List<TodoModel> initTodo;
 
   FilteredTodosCubit({

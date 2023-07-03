@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo_cubit/cubits/cubits.dart';
 import 'package:todo_cubit/pages/todos_page/todo_page.dart';
 
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        builder: FToastBuilder(),
         home: const TodosPage(),
       ),
     );
